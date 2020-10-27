@@ -1,6 +1,6 @@
 # Ktm Ticketing System
 
-A simple project that made by UniKL student
+A simple project assignment made by UniKL student
 
 Requirement: Microsoft Visual Studio 2013
 
