@@ -1,0 +1,174 @@
+﻿@model KTMTicketingv2.Models.TicketDetails
+
+@{
+    ViewBag.Title = "PurchaseSummary";
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    KTMTicketingv2.Models.PurchasedTicket pt = new KTMTicketingv2.Models.PurchasedTicket();
+    Random rand = new Random((int)DateTime.Now.Ticks);
+    int RandomNumber = rand.Next(100000, 999999);
+
+    pt.TicketID = RandomNumber;
+    pt.EmailID = Model.Passenger.EmailID;
+    pt.Origin = Model.Passenger.OriginLoc;
+    pt.Destin = Model.Passenger.DestiLoc;
+    pt.Price = Model.Passenger.Price;
+    pt.PurchasedOn = DateTime.Now;
+    pt.Quantity = Model.Passenger.Quantity;
+    pt.TicketType = Model.Passenger.Citizen;
+    String WayLocation = Model.Passenger.WayLoc;
+    string FirstName = Model.Passenger.FirstName;
+    string LastName = Model.Passenger.LastName;
+    string ICNumber = Model.Passenger.ICNumber;
+
+
+    using (KTMTicketingv2.Models.KTMTicketingEntities dc = new KTMTicketingv2.Models.KTMTicketingEntities())
+    {
+        dc.PurchasedTickets.Add(pt);
+        dc.SaveChanges();
+    }
+
+    ViewBag.PurchasedOn = pt.PurchasedOn;
+    ViewBag.TicketID = pt.TicketID;
+
+    var fromEmail = new System.Net.Mail.MailAddress("jkelabu55@gmail.com", "KTM Ticketing Invoice");
+    var toEmail = new System.Net.Mail.MailAddress(pt.EmailID);
+    var fromEmailPassword = "jkelabu123";
+    string subject = "Your ticket is successfully purchased!";
+
+    string body = "<html><body style=\"background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;\">"
+    + "<table style=\"max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;\">"
+        + "<thead>"
+            + "<tr>"
+                + "<th style=\"text-align:right;font-weight:400;\">" + pt.PurchasedOn + "</th>"
+            + "</tr>"
+        + "</thead>"
+        + "<tbody>"
+            + "<tr>"
+                + "<td style=\"height:35px;\"></td>"
+            + "</tr>"
+            + "<tr>"
+                + "<td colspan=\"2\" style=\"border: solid 1px #ddd; padding:10px 20px;\">"
+                    + "<p style=\"font-size:14px;margin:0 0 6px 0;\"><span style=\"font-weight:bold;display:inline-block;min-width:150px\">Order status</span><b style=\"color:green;font-weight:normal;margin:0\">Success</b></p>"
+                    + "<p style=\"font-size:14px;margin:0 0 6px 0;\"><span style=\"font-weight:bold;display:inline-block;min-width:146px\">Ticket ID</span> " + pt.TicketID + "</p>"
+                    + "<p style=\"font-size:14px;margin:0 0 0 0;\"><span style=\"font-weight:bold;display:inline-block;min-width:146px\">Order amount</span> RM " + pt.Price.ToString("0.00") + "</p>"
+                + "</td>"
+            + "</tr>"
+            + "<tr>"
+                + "<td style=\"height:35px;\"></td>"
+            + "</tr>"
+            + "<tr>"
+                + "<td style=\"width:50%;padding:20px;vertical-align:top\">"
+                    + "<p style=\"margin:0 0 10px 0;padding:0;font-size:14px;\"><span style=\"display:block;font-weight:bold;font-size:13px;\">Name</span> " + FirstName + " " + LastName + "</p>"
+                    + "<p style=\"margin:0 0 10px 0;padding:0;font-size:14px;\"><span style=\"display:block;font-weight:bold;font-size:13px;\">Email</span> " + pt.EmailID + "</p>"
+                    + "<p style=\"margin:0 0 10px 0;padding:0;font-size:14px;\"><span style=\"display:block;font-weight:bold;font-size:13px;\">IC No.</span>" + ICNumber + "</p>"
+                + "</td>"
+            + "</tr>"
+            + "<tr>"
+                + "<td colspan=\"2\" style=\"font-size:20px;padding:30px 15px 0 15px;\">Details</td>"
+            + "</tr>"
+            + "<tr>"
+                + "<td colspan=\"2\" style=\"padding:15px;\">"
+                    + "<p style=\"font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;\"><span style=\"display:block;font-size:13px;font-weight:normal;\">Origin</span>" + pt.Origin + "<b style=\"font-size:12px;font-weight:300;\"></b></p>"
+                    + "<p style=\"font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;\"><span style=\"display:block;font-size:13px;font-weight:normal;\">Destination</span>" + pt.Destin + "<b style=\"font-size:12px;font-weight:300;\"></b></p>"
+                    + "<p style=\"font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;\"><span style=\"display:block;font-size:13px;font-weight:normal;\">Trip Type</span>" + WayLocation + "<b style=\"font-size:12px;font-weight:300;\"></b></p>"
+                    + "<p style=\"font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;\"><span style=\"display:block;font-size:13px;font-weight:normal;\">Citizen Type</span>" + pt.TicketType + "<b style=\"font-size:12px;font-weight:300;\"></b></p>"
+                    + "<p style=\"font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;\"><span style=\"display:block;font-size:13px;font-weight:normal;\">Quantity</span>" + pt.Quantity + "<b style=\"font-size:12px;font-weight:300;\"></b></p>"
+                + "</td>"
+            + "</tr>"
+        + "</tbody>"
+        + "<tfooter>"
+            + "<tr>"
+                + "<td colspan=\"2\" style=\"font-size:14px;padding:50px 15px 0 15px;\">"
+                    + "<strong style=\"display:block;margin:0 0 10px 0;\">Regards</strong> KTM Ticketing<br> UniKL, 56000, jalan Sultan Ismail, Kuala Lumpur, Ismail<br><br>"
+                    + "<b>Phone:</b> 03-2175 4000<br>"
+                    + "<b>Email:</b> jkelabu55@gmail.com"
+                + "</td>"
+            + "</tr>"
+        + "</tfooter>"
+    + "</table>"
++ "</body>";
+
+    var smtp = new System.Net.Mail.SmtpClient
+    {
+        Host = "smtp.gmail.com",
+        Port = 587,
+        EnableSsl = true,
+        DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
+        UseDefaultCredentials = false,
+        Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+    };
+
+    var message = new System.Net.Mail.MailMessage(fromEmail, toEmail)
+    {
+        Subject = subject,
+        Body = body,
+        IsBodyHtml = true,
+
+    };
+    smtp.Send(message);
+    
+    <div style="font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+        <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
+            <thead>
+                <tr>
+                    <th style="text-align:left;"><img style="max-width: 150px;" src="~/Images/KTM1.png" alt="KTM Ticket"></th>
+                    <th style="text-align:right;font-weight:400;">@ViewBag.PurchasedOn</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height:35px;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
+                        <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:green;font-weight:normal;margin:0">Success</b></p>
+                        <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Ticket ID</span> @ViewBag.TicketID </p>
+                        <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Order amount</span> @Html.DisplayFor(a => a.Passenger.Price) </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height:35px;"></td>
+                </tr>
+                <tr>
+                    <td style="width:50%;padding:20px;vertical-align:top">
+                        <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Name</span> @Html.DisplayFor(a => a.Passenger.FirstName) @Html.DisplayFor(a => a.Passenger.LastName) </p>
+                        <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> @Html.DisplayFor(a => a.Passenger.EmailID) </p>
+                        <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">IC No.</span> @Html.DisplayFor(a => a.Passenger.ICNumber) </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size:20px;padding:30px 15px 0 15px;">Details</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:15px;">
+                        <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Origin</span>@Html.DisplayFor(a => a.Passenger.OriginLoc)<b style="font-size:12px;font-weight:300;"></b></p>
+                        <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Destination</span>@Html.DisplayFor(a => a.Passenger.DestiLoc)<b style="font-size:12px;font-weight:300;"></b></p>
+                        <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Trip Type</span>@Html.DisplayFor(a => a.Passenger.WayLoc)<b style="font-size:12px;font-weight:300;"></b></p>
+                        <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Citizen Type</span>@Html.DisplayFor(a => a.Passenger.Citizen)<b style="font-size:12px;font-weight:300;"></b></p>
+                        <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Quantity</span>@Html.DisplayFor(a => a.Passenger.Quantity)<b style="font-size:12px;font-weight:300;"></b></p>
+                    </td>
+                </tr>
+            </tbody>
+            <tfooter>
+                <tr>
+                    <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+                        <strong style="display:block;margin:0 0 10px 0;">Regards</strong>  KTM Ticketing<br> UniKL, 56000, <br>Jalan Sultan Ismail, Kuala Lumpur, Ismail<br>
+                        <b>Phone:</b> 03-2175 4000<br>
+                        <b>Email:</b> jkelabu55@gmail.com
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+                        <div class="text-center" style="padding-bottom:30px">
+                            @Html.ActionLink("Purchase Another", "BuyTicket", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg btn3d" })
+                        </div>
+                    </td>
+                </tr>
+            </tfooter>
+        </table>
+
+    </div>
+}

@@ -1,0 +1,88 @@
+﻿@model KTMTicketingv2.Models.TicketDetails
+
+@{
+    ViewBag.Title = "Purchase Ticket";
+}
+
+<h2>Buy Ticket</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Ticket Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination.OriginLoc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Destination.OriginLoc, new SelectList(ViewBag.DictLane, "Key", "Value"), "- Please select your origin -", new { htmlAttributes = new { @class = "form-control" } })
+                
+                @Html.ValidationMessageFor(model => model.Destination.OriginLoc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination.DestiLoc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Destination.DestiLoc, new SelectList(ViewBag.DictLane, "Key", "Value"), "- Please select your destination -", new { htmlAttributes = new { @class = "form-control" } })
+                
+                @Html.ValidationMessageFor(model => model.Destination.DestiLoc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination.WayLoc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Destination.WayLoc, 0, new { htmlAttributes = new { @class = "form-control", @checked = "checked" } })
+                Return Trip
+                @Html.RadioButtonFor(model => model.Destination.WayLoc, 1, new { htmlAttributes = new { @class = "form-control" } })
+                One Way Trip
+                
+                @Html.ValidationMessageFor(model => model.Destination.WayLoc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination.Citizen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Destination.Citizen, 0, new { htmlAttributes = new { @class = "form-control", @checked = "checked" } })
+                Normal
+                @Html.RadioButtonFor(model => model.Destination.Citizen, 1, new { htmlAttributes = new { @class = "form-control" } })
+                Senior
+                @Html.RadioButtonFor(model => model.Destination.Citizen, 2, new { htmlAttributes = new { @class = "form-control" } })
+                Disabled
+                @Html.RadioButtonFor(model => model.Destination.Citizen, 3, new { htmlAttributes = new { @class = "form-control" } })
+                Student
+                
+                @Html.ValidationMessageFor(model => model.Destination.Citizen, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Destination.Quantity, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1", @value = "1" } })
+                @Html.ValidationMessageFor(model => model.Destination.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                 <button type="submit" class="btn btn-primary btn3d"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;Confirm</button>               
+                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "btn btn-warning btn3d" })
+                                
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

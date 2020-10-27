@@ -1,0 +1,67 @@
+﻿@model IEnumerable<KTMTicketingv2.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsEmailVerified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivationCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ICNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsEmailVerified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivationCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ICNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }, new { @class = "btn btn-primary btn3d" }) 
+            @Html.ActionLink("Details", "Details", new { id=item.UserID }, new { @class = "btn btn-success btn3d" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserID }, new { @class = "btn btn-danger btn3d" })
+        </td>
+    </tr>
+}
+
+</table>

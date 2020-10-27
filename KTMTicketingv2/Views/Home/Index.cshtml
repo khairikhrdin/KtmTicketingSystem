@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!--Welcome @HttpContext.Current.User.Identity.Name-->
+
+<div class="text-center cover-main">
+        <main role="main" class="inner cover" style="padding-top:30px;">
+
+            <img src="~/Images/KTM1.png" width="500" alt="" />
+            <h1 class="cover-heading">KERETAPI TANAH MELAYU BERHAD</h1>
+            <p class="lead">KTMB - Malaysia Largest Railway Company. Book all the train tickets online including KTM train, ETS train, Intercity & more though our online ticketing platform.</p>
+            <p class="lead">
+                @Html.ActionLink("Book Now", "BuyTicket", "Home", new { area = "" }, new { @class = "btn btn-primary btn-lg btn3d" })
+            </p>
+        </main>
+</div>

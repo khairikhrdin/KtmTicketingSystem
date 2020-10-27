@@ -1,0 +1,101 @@
+﻿@model KTMTicketingv2.Models.TicketDetails
+
+@{
+    ViewBag.Title = "PurchaseDetails";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <!--
+    <h2>Ticket Details</h2>
+    <p> Origin : @ViewBag.OriginLoc </p>
+    <p> Destination : @ViewBag.DestiLoc </p>
+    <p> Trip Type : @ViewBag.WayLoc </p>
+    <p> Citizen Type : @ViewBag.Citizen </p>
+    <p> Quantity : @ViewBag.Quantity </p>
+    <p> Price : @ViewBag.Price </p>
+
+    <h2>User Details</h2>
+    <p> Email : @ViewBag.EmailID </p>
+    <p> Name : @ViewBag.FirstName @ViewBag.LastName</p>
+    <p> IC Number : @ViewBag.ICNumber </p>
+    -->
+
+<div style="font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+    <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
+        <thead>
+            <tr>
+                <th style="text-align:left;"><img style="max-width: 150px;" src="~/Images/KTM1.png" alt="KTM Ticket"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="height:35px;"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
+                    <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:green;font-weight:normal;margin:0">Waiting for Confirmation</b></p>
+                    <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Order amount</span> RM @ViewBag.Price.ToString("0.00") </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="height:35px;"></td>
+            </tr>
+            <tr>
+                <td style="width:50%;padding:20px;vertical-align:top">
+                    <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Name</span> @ViewBag.FirstName @ViewBag.LastName </p>
+                    <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> @ViewBag.EmailID </p>
+                    <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">IC No.</span> @ViewBag.ICNumber </p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size:20px;padding:30px 15px 0 15px;">Details</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:15px;">
+                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Origin</span>@ViewBag.OriginLoc<b style="font-size:12px;font-weight:300;"></b></p>
+                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Destination</span>@ViewBag.DestiLoc<b style="font-size:12px;font-weight:300;"></b></p>
+                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Trip Type</span>@ViewBag.WayLoc<b style="font-size:12px;font-weight:300;"></b></p>
+                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Citizen Type</span>@ViewBag.Citizen<b style="font-size:12px;font-weight:300;"></b></p>
+                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Quantity</span>@ViewBag.Quantity<b style="font-size:12px;font-weight:300;"></b></p>
+                </td>
+            </tr>
+        </tbody>
+        <tfooter>
+            <tr>
+                <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+                    <strong style="display:block;margin:0 0 10px 0;">Regards</strong>  KTM Ticketing<br> UniKL, 56000, <br>Jalan Sultan Ismail, Kuala Lumpur, Ismail<br>
+                    <b>Phone:</b> 03-2175 4000<br>
+                    <b>Email:</b> jkelabu55@gmail.com
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+
+                    @Html.HiddenFor(m => m.Passenger.OriginLoc, new { @Value = @ViewBag.OriginLoc })
+                    @Html.HiddenFor(m => m.Passenger.DestiLoc, new { @Value = @ViewBag.DestiLoc })
+                    @Html.HiddenFor(m => m.Passenger.WayLoc, new { @Value = @ViewBag.WayLoc })
+                    @Html.HiddenFor(m => m.Passenger.Citizen, new { @Value = @ViewBag.Citizen })
+                    @Html.HiddenFor(m => m.Passenger.Quantity, new { @Value = @ViewBag.Quantity })
+                    @Html.HiddenFor(m => m.Passenger.Price, new { @Value = @ViewBag.Price })
+                    @Html.HiddenFor(m => m.Passenger.EmailID, new { @Value = @ViewBag.EmailID })
+                    @Html.HiddenFor(m => m.Passenger.FirstName, new { @Value = @ViewBag.FirstName })
+                    @Html.HiddenFor(m => m.Passenger.LastName, new { @Value = @ViewBag.LastName })
+                    @Html.HiddenFor(m => m.Passenger.ICNumber, new { @Value = @ViewBag.ICNumber })
+
+                    @Html.HiddenFor(m => m.Passenger.OriginLocID, new { @Value = @ViewBag.OriginID })
+                    @Html.HiddenFor(m => m.Passenger.DestiLocID, new { @Value = @ViewBag.DestinationID })
+                    @Html.HiddenFor(m => m.Passenger.WayLocID, new { @Value = @ViewBag.WayLocID })
+                    @Html.HiddenFor(m => m.Passenger.CitizenID, new { @Value = @ViewBag.CitizenID })
+                    <div class="text-center" style="padding-bottom:30px">
+                        <input type="submit" value="Confirm" class="btn btn-success btn-lg btn3d" />
+                    </div>
+                </td>
+            </tr>
+        </tfooter>
+    </table>
+
+</div>
+
+
+}
