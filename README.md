@@ -1,10 +1,10 @@
 # Ktm Ticketing System
 
-A simple project assignment made by UniKL student
+Ticketing system using .NET mvc
 
 Requirement: Microsoft Visual Studio 2013
 
-What is work?
+What is working?
 1. Purchase ticket
 2. Admin CRUD
 3. Email verification
